@@ -1,0 +1,348 @@
+name: JujuCore
+version: '${version}'
+main: org.juju.jujucore.JujuCore
+api-version: '26.3'
+load: POSTWORLD
+authors: [juju]
+description: Useful all-in-one server commands
+softdepend: [AuthMe]
+commands:
+  jujucore:
+    description: Main JujuCore command
+    usage: /jujucore
+    aliases: [jcore, core]
+  gm:
+    description: Change gamemode
+    usage: /gm <0|1|2|3> [player]
+    aliases: [gamemode]
+  gmc:
+    description: Creative mode
+    usage: /gmc [player]
+  gms:
+    description: Survival mode
+    usage: /gms [player]
+  gma:
+    description: Adventure mode
+    usage: /gma [player]
+  gmsp:
+    description: Spectator mode
+    usage: /gmsp [player]
+  fly:
+    description: Toggle flight
+    usage: /fly [player]
+  vanish:
+    description: Toggle vanish
+    usage: /vanish [player]
+    aliases: [v]
+  top:
+    description: Teleport to the highest safe block
+    usage: /top
+  heal:
+    description: Heal a player
+    usage: /heal [player]
+  feed:
+    description: Feed a player
+    usage: /feed [player]
+  repair:
+    description: Repair held item or inventory
+    usage: /repair [all]
+  speed:
+    description: Set walk and fly speed
+    usage: /speed <1-10> [player]
+  spawn:
+    description: Teleport to spawn
+    usage: /spawn
+  setspawn:
+    description: Set server spawn
+    usage: /setspawn
+  sethome:
+    description: Set a home
+    usage: /sethome [name]
+  home:
+    description: Teleport to a home
+    usage: /home [name]
+  delhome:
+    description: Delete a home
+    usage: /delhome [name]
+  back:
+    description: Return to last location
+    usage: /back
+  tp:
+    description: Teleport players
+    usage: /tp <player> [target]
+  tphere:
+    description: Teleport a player to you
+    usage: /tphere <player>
+  invsee:
+    description: Open a player inventory
+    usage: /invsee <player>
+  ec:
+    description: Open an ender chest
+    usage: /ec [player]
+    aliases: [enderchest]
+  msg:
+    description: Send a private message
+    usage: /msg <player> <message>
+    aliases: [tell, w, pm]
+  reply:
+    description: Reply to the last private message
+    usage: /reply <message>
+    aliases: [r]
+  socialspy:
+    description: Toggle social spy
+    usage: /socialspy
+  report:
+    description: Report a player
+    usage: /report <player> <reason>
+  reports:
+    description: Manage reports
+    usage: /reports [list|info|close|clear]
+  day:
+    description: Set day
+    usage: /day
+  night:
+    description: Set night
+    usage: /night
+  weather:
+    description: Set weather
+    usage: /weather <clear|rain|thunder>
+  clearinventory:
+    description: Clear inventory
+    usage: /clearinventory [player]
+    aliases: [ci, clearinv]
+  trash:
+    description: Open a trash inventory
+    usage: /trash
+  near:
+    description: Show nearby players
+    usage: /near [radius]
+  god:
+    description: Toggle godmode
+    usage: /god [player]
+    aliases: [godmode]
+  freeze:
+    description: Freeze a player
+    usage: /freeze <player>
+  unfreeze:
+    description: Unfreeze a player
+    usage: /unfreeze <player>
+  staffchat:
+    description: Staff chat message or toggle
+    usage: /staffchat [message]
+    aliases: [sc]
+  broadcast:
+    description: Broadcast a message
+    usage: /broadcast <message>
+    aliases: [bc]
+  clearchat:
+    description: Clear chat
+    usage: /clearchat
+  hat:
+    description: Put held item on your head
+    usage: /hat
+  workbench:
+    description: Open a workbench
+    usage: /workbench
+    aliases: [wb, craft]
+  suicide:
+    description: Kill yourself
+    usage: /suicide
+    aliases: [killme]
+  seen:
+    description: Show when a player was last online
+    usage: /seen <player>
+  playtime:
+    description: Show playtime
+    usage: /playtime [player]
+  check:
+    description: Show player information
+    usage: /check <player>
+  warp:
+    description: Teleport to a warp
+    usage: /warp <name>
+  warps:
+    description: List warps
+    usage: /warps
+  setwarp:
+    description: Set a warp
+    usage: /setwarp <name>
+  delwarp:
+    description: Delete a warp
+    usage: /delwarp <name>
+  tpa:
+    description: Send a teleport request
+    usage: /tpa <player>
+  tpaccept:
+    description: Accept a teleport request
+    usage: /tpaccept
+  tpdeny:
+    description: Deny a teleport request
+    usage: /tpdeny
+  tpcancel:
+    description: Cancel your teleport request
+    usage: /tpcancel
+  kit:
+    description: Claim a kit
+    usage: /kit <name>
+  kits:
+    description: List available kits
+    usage: /kits
+  createkit:
+    description: Create a kit from your inventory
+    usage: /createkit <name> [cooldownSeconds]
+  delkit:
+    description: Delete a kit
+    usage: /delkit <name>
+  troll:
+    description: Troll a player with funny safe pranks
+    usage: /troll <player> <action>
+    aliases: [prank]
+  villager:
+    description: Set the book a librarian sells, or clear villager hate
+    usage: /villager <book <enchantment> [level]|clearhate [radius]>
+    aliases: [vil]
+  kiste:
+    description: Protect your chests, give friends access, see who opened them
+    usage: /kiste <info|add|remove|sichern|frei|log|hilfe> [name|page]
+    aliases: [lock]
+permissions:
+  jujucore.admin:
+    description: Full JujuCore access
+    default: op
+    children:
+      jujucore.reload: true
+      jujucore.gamemode: true
+      jujucore.gamemode.others: true
+      jujucore.fly: true
+      jujucore.fly.others: true
+      jujucore.vanish: true
+      jujucore.vanish.others: true
+      jujucore.vanish.see: true
+      jujucore.top: true
+      jujucore.heal: true
+      jujucore.heal.others: true
+      jujucore.feed: true
+      jujucore.feed.others: true
+      jujucore.repair: true
+      jujucore.speed: true
+      jujucore.speed.others: true
+      jujucore.setspawn: true
+      jujucore.tp: true
+      jujucore.tphere: true
+      jujucore.invsee: true
+      jujucore.ec: true
+      jujucore.ec.others: true
+      jujucore.socialspy: true
+      jujucore.reports: true
+      jujucore.time: true
+      jujucore.weather: true
+      jujucore.clearinventory: true
+      jujucore.clearinventory.others: true
+      jujucore.trash: true
+      jujucore.near: true
+      jujucore.sethome.unlimited: true
+      jujucore.god: true
+      jujucore.god.others: true
+      jujucore.freeze: true
+      jujucore.staffchat: true
+      jujucore.broadcast: true
+      jujucore.clearchat: true
+      jujucore.hat: true
+      jujucore.workbench: true
+      jujucore.suicide: true
+      jujucore.seen: true
+      jujucore.playtime: true
+      jujucore.playtime.others: true
+      jujucore.check: true
+      jujucore.warp: true
+      jujucore.setwarp: true
+      jujucore.delwarp: true
+      jujucore.tpa: true
+      jujucore.kit: true
+      jujucore.kit.create: true
+      jujucore.kit.delete: true
+      jujucore.kit.cooldown.bypass: true
+      jujucore.troll: true
+      jujucore.plugins.bypass: true
+      jujucore.villager: true
+  jujucore.player:
+    description: Basic player commands
+    default: true
+    children:
+      jujucore.spawn: true
+      jujucore.home: true
+      jujucore.sethome: true
+      jujucore.delhome: true
+      jujucore.back: true
+      jujucore.msg: true
+      jujucore.reply: true
+      jujucore.report: true
+      jujucore.near: true
+      jujucore.warp: true
+      jujucore.tpa: true
+      jujucore.kit.starter: true
+      jujucore.workbench: true
+      jujucore.suicide: true
+      jujucore.playtime: true
+      jujucore.seen: true
+  jujucore.staff:
+    description: Staff commands
+    default: op
+    children:
+      jujucore.player: true
+      jujucore.fly: true
+      jujucore.vanish: true
+      jujucore.vanish.see: true
+      jujucore.top: true
+      jujucore.heal: true
+      jujucore.feed: true
+      jujucore.repair: true
+      jujucore.tp: true
+      jujucore.tphere: true
+      jujucore.invsee: true
+      jujucore.ec: true
+      jujucore.ec.others: true
+      jujucore.socialspy: true
+      jujucore.reports: true
+      jujucore.trash: true
+      jujucore.god: true
+      jujucore.freeze: true
+      jujucore.staffchat: true
+      jujucore.broadcast: true
+      jujucore.clearchat: true
+      jujucore.hat: true
+      jujucore.playtime.others: true
+      jujucore.check: true
+      jujucore.setwarp: true
+      jujucore.delwarp: true
+      jujucore.kit.starter: true
+      jujucore.troll: true
+      jujucore.plugins.bypass: true
+
+  jujucore.kit:
+    description: Use every kit
+    default: op
+  jujucore.kit.create:
+    description: Create kits from inventory
+    default: op
+  jujucore.kit.delete:
+    description: Delete kits
+    default: op
+  jujucore.kit.cooldown.bypass:
+    description: Bypass kit cooldowns
+    default: op
+  jujucore.kit.starter:
+    description: Use the starter kit
+    default: true
+  jujucore.troll:
+    description: Use /troll
+    default: op
+  jujucore.villager:
+    description: Use /villager book and /villager clearhate
+    default: op
+  jujucore.plugins.bypass:
+    description: See blocked plugin/version commands
+    default: op
+  jujucore.kiste.bypass:
+    description: Open, break and inspect every locked chest
+    default: op

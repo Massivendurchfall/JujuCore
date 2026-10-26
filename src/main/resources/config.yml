@@ -1,0 +1,30 @@
+prefix: "&bJujuCore &8» &7"
+max-homes: 3
+tpa-timeout-seconds: 60
+teleport-message: true
+report-staff-permission: "jujucore.reports"
+vanish-see-permission: "jujucore.vanish.see"
+# fake "left the game" / "joined the game" for everyone else when going in or out of vanish
+vanish-fake-messages: true
+# how many logins per player show the chest commands hint (0 = never, -1 = every login)
+kisten-hinweis-anzahl: 5
+hide-plugin-list: true
+blocked-plugin-commands:
+  - "plugins"
+  - "pl"
+  - "bukkit:plugins"
+  - "bukkit:pl"
+  - "version"
+  - "ver"
+  - "about"
+  - "bukkit:version"
+  - "bukkit:ver"
+  - "bukkit:about"
+  - "paper"
+  - "paper:paper"
+  - "icanhasbukkit"
+  - "help"
+  - "?"
+  - "bukkit:help"
+  - "bukkit:?"
+  - "minecraft:help"
