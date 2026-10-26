@@ -20,6 +20,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.juju.jujucore.JujuCore;
+import org.juju.jujucore.command.CoreCommand;
 import org.juju.jujucore.manager.DataManager;
 import org.juju.jujucore.manager.StateManager;
 import org.juju.jujucore.manager.VanishManager;
@@ -117,8 +118,14 @@ public class CoreListener implements Listener {
 
     @EventHandler
     public void onCommandSend(PlayerCommandSendEvent e) {
-        if (!plugin.getConfig().getBoolean("hide-plugin-list", true)) return;
         Player p = e.getPlayer();
+        // dont show our commands to people who dont have the permission for them
+        e.getCommands().removeIf(label -> {
+            String cmd = plugin.commandFor(label);
+            return cmd != null && !CoreCommand.canUse(p, cmd);
+        });
+
+        if (!plugin.getConfig().getBoolean("hide-plugin-list", true)) return;
         if (p.isOp() || p.hasPermission("jujucore.plugins.bypass") || p.hasPermission("jujucore.admin")) return;
         List<String> blocked = blockedCommands();
         // stuff like "worldedit:pos1" shows which plugins we have

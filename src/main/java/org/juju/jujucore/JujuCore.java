@@ -17,9 +17,15 @@ import org.juju.jujucore.manager.StateManager;
 import org.juju.jujucore.manager.VanishManager;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class JujuCore extends JavaPlugin {
+
+    // every label (name + aliases) -> our command name, for hiding commands
+    private final Map<String, String> labels = new HashMap<>();
 
     private DataManager data;
     private KitManager kits;
@@ -92,7 +98,16 @@ public class JujuCore extends JavaPlugin {
             if (cmd != null) {
                 cmd.setExecutor(coreCmd);
                 cmd.setTabCompleter(coreCmd);
+                labels.put(name, name);
+                for (String alias : cmd.getAliases()) labels.put(alias.toLowerCase(Locale.ROOT), name);
             }
         }
+    }
+
+    // our command name for a label like "gamemode" or "jujucore:gm", null if its not one of ours
+    public String commandFor(String label) {
+        String l = label.toLowerCase(Locale.ROOT);
+        if (l.startsWith("jujucore:")) l = l.substring("jujucore:".length());
+        return labels.get(l);
     }
 }

@@ -74,6 +74,37 @@ public class CoreCommand implements CommandExecutor, TabCompleter {
     private final Map<UUID, TpaRequest> pendingTpa = new HashMap<>();
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY);
 
+    // permission each command needs, so we can hide it (and its tab complete) from people who cant use it.
+    // kit/kits arent here, those check per kit
+    private static final Map<String, String> PERMS = Map.ofEntries(
+            Map.entry("jujucore", "jujucore.reload"),
+            Map.entry("gm", "jujucore.gamemode"), Map.entry("gmc", "jujucore.gamemode"), Map.entry("gms", "jujucore.gamemode"),
+            Map.entry("gma", "jujucore.gamemode"), Map.entry("gmsp", "jujucore.gamemode"),
+            Map.entry("fly", "jujucore.fly"), Map.entry("vanish", "jujucore.vanish"), Map.entry("top", "jujucore.top"),
+            Map.entry("heal", "jujucore.heal"), Map.entry("feed", "jujucore.feed"), Map.entry("repair", "jujucore.repair"),
+            Map.entry("speed", "jujucore.speed"), Map.entry("spawn", "jujucore.spawn"), Map.entry("setspawn", "jujucore.setspawn"),
+            Map.entry("sethome", "jujucore.sethome"), Map.entry("home", "jujucore.home"), Map.entry("delhome", "jujucore.delhome"),
+            Map.entry("back", "jujucore.back"), Map.entry("tp", "jujucore.tp"), Map.entry("tphere", "jujucore.tphere"),
+            Map.entry("invsee", "jujucore.invsee"), Map.entry("ec", "jujucore.ec"), Map.entry("msg", "jujucore.msg"),
+            Map.entry("reply", "jujucore.reply"), Map.entry("socialspy", "jujucore.socialspy"), Map.entry("report", "jujucore.report"),
+            Map.entry("reports", "jujucore.reports"), Map.entry("day", "jujucore.time"), Map.entry("night", "jujucore.time"),
+            Map.entry("weather", "jujucore.weather"), Map.entry("clearinventory", "jujucore.clearinventory"),
+            Map.entry("trash", "jujucore.trash"), Map.entry("near", "jujucore.near"), Map.entry("god", "jujucore.god"),
+            Map.entry("freeze", "jujucore.freeze"), Map.entry("unfreeze", "jujucore.freeze"), Map.entry("staffchat", "jujucore.staffchat"),
+            Map.entry("broadcast", "jujucore.broadcast"), Map.entry("clearchat", "jujucore.clearchat"), Map.entry("hat", "jujucore.hat"),
+            Map.entry("workbench", "jujucore.workbench"), Map.entry("suicide", "jujucore.suicide"), Map.entry("seen", "jujucore.seen"),
+            Map.entry("playtime", "jujucore.playtime"), Map.entry("check", "jujucore.check"), Map.entry("warp", "jujucore.warp"),
+            Map.entry("warps", "jujucore.warp"), Map.entry("setwarp", "jujucore.setwarp"), Map.entry("delwarp", "jujucore.delwarp"),
+            Map.entry("createkit", "jujucore.kit.create"), Map.entry("delkit", "jujucore.kit.delete"),
+            Map.entry("tpa", "jujucore.tpa"), Map.entry("tpaccept", "jujucore.tpa"), Map.entry("tpdeny", "jujucore.tpa"),
+            Map.entry("tpcancel", "jujucore.tpa"), Map.entry("troll", "jujucore.troll"), Map.entry("villager", "jujucore.villager")
+    );
+
+    public static boolean canUse(CommandSender sender, String cmd) {
+        String perm = PERMS.get(cmd);
+        return perm == null || sender.hasPermission(perm) || sender.hasPermission("jujucore.admin");
+    }
+
     public CoreCommand(JujuCore plugin, DataManager data, KitManager kits, ReportManager reports, VanishManager vanish, StateManager state) {
         this.plugin = plugin;
         this.data = data;
@@ -1836,6 +1867,8 @@ public class CoreCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         String name = command.getName().toLowerCase();
+        // no suggestions for commands you cant use (non ops typing /gm got "creative" etc)
+        if (!canUse(sender, name)) return List.of();
         if (args.length == 1) {
             return switch (name) {
                 case "jujucore" -> Text.filter(List.of("reload"), args[0]);
